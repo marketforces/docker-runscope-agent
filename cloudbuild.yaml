@@ -1,0 +1,19 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['pull', 'us.gcr.io/$PROJECT_ID/runscope-radar-agent:master-latest']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+            'build',
+            '--cache-from',
+            'us.gcr.io/$PROJECT_ID/runscope-radar-agent:master-latest',
+            '-t',
+            'us.gcr.io/$PROJECT_ID/runscope-radar-agent:$BRANCH_NAME-$REVISION_ID',
+            '-t',
+            'us.gcr.io/$PROJECT_ID/runscope-radar-agent:master-latest',
+            '-t',
+            'us.gcr.io/$PROJECT_ID/runscope-radar-agent:latest',
+            '-f',
+            'Dockerfile',
+            '.'
+          ]
+images: ['us.gcr.io/$PROJECT_ID/runscope-radar-agent:$BRANCH_NAME-$REVISION_ID', 'us.gcr.io/$PROJECT_ID/runscope-radar-agent:master-latest', 'us.gcr.io/$PROJECT_ID/runscope-radar-agent:latest']
